@@ -5,6 +5,7 @@
 
 # 1) Source connectors
 # Start our kafka cluster
+cd /Users/joeqiao/Documents/LocalHub/kafka/kafka-connect/
 docker-compose up kafka-cluster
 # Wait 2 minutes for the kafka cluster to be started
 
