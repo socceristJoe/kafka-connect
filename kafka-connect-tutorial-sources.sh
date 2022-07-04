@@ -17,11 +17,7 @@ docker-compose up kafka-cluster
 
 # We start a hosted tools, mapped on our code
 # Linux / Mac
-docker run --rm -it -v "$(pwd)":/tutorial --net=host landoop/fast-data-dev:cp3.3.0 bash
-# Windows Command Line:
-docker run --rm -it -v %cd%:/tutorial --net=host landoop/fast-data-dev:cp3.3.0 bash
-# Windows Powershell:
-docker run --rm -it -v ${PWD}:/tutorial --net=host landoop/fast-data-dev:cp3.3.0 bash
+docker run --rm -it -v /Users/joeqiao/Documents/LocalHub/kafka/kafka-connect:/tutorial --net=host landoop/fast-data-dev:cp3.3.0 bash
 
 # we launch the kafka connector in standalone mode:
 cd /tutorial/source/demo-1
@@ -46,7 +42,7 @@ kafka-topics --create --topic demo-2-distributed --partitions 3 --replication-fa
 
 # Now that the configuration is launched, we need to create the file demo-file.txt
 docker ps
-docker exec -it <containerId> bash
+docker exec -it 4e094f6d86c5 bash
 touch demo-file.txt
 echo "hi" >> demo-file.txt
 echo "hello" >> demo-file.txt
