@@ -7,6 +7,8 @@
 # Start our kafka cluster
 cd /Users/joeqiao/Documents/LocalHub/kafka/kafka-connect/
 docker-compose up kafka-cluster
+docker-compose up kafka-cluster-2
+docker-compose up kafka-cluster-3
 # Wait 2 minutes for the kafka cluster to be started
 
 ###############

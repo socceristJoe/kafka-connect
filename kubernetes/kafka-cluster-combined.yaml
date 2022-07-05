@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f ../docker-compose.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: kafka-cluster
+  name: kafka-cluster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kafka-cluster
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f ../docker-compose.yml convert
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: kafka-cluster
+    spec:
+      containers:
+        - env:
+            - name: ADV_HOST
+              value: 127.0.0.1
+            - name: RUNTESTS
+              value: "0"
+          image: acraksnativeinteastus2deveastus2hptf.azurecr.io/landoop/fast-data-dev:cp3.3.0
+          name: kafka-cluster
+          ports:
+            - containerPort: 2181
+            - containerPort: 3030
+            - containerPort: 8081
+            - containerPort: 8082
+            - containerPort: 8083
+            - containerPort: 9581
+            - containerPort: 9582
+            - containerPort: 9583
+            - containerPort: 9584
+            - containerPort: 9585
+            - containerPort: 9092
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose -f ../docker-compose.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: elasticsearch
+  name: elasticsearch
+spec:
+  ports:
+    - name: "9200"
+      port: 9200
+      targetPort: 9200
+  selector:
+    io.kompose.service: elasticsearch
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f ../docker-compose.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: elasticsearch
+  name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: elasticsearch
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f ../docker-compose.yml convert
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: elasticsearch
+    spec:
+      containers:
+        - env:
+            - name: OPTS
+              value: -Dindex.number_of_shards=1 -Dindex.number_of_replicas=0
+            - name: PLUGINS
+              value: appbaseio/dejavu
+          image: acraksnativeinteastus2deveastus2hptf.azurecr.io/itzg/elasticsearch:2.4.3
+          name: elasticsearch
+          ports:
+            - containerPort: 9200
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose -f ../docker-compose.yml convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: elasticsearch
+  name: elasticsearch
+  namespace: 
+spec:
+  ports:
+    - name: "9200"
+      port: 9200
+      targetPort: 9200
+  selector:
+    io.kompose.service: elasticsearch
+status:
+  loadBalancer: {}
+
+
+
+---
+
+
+
+---
+
+
+---
